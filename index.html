@@ -10,26 +10,64 @@
 <style>
   :root{
     --paper:#FAF7F1;
+    --paper-warm:#F3EDE3;
     --ink:#26231F;
     --ink-soft:#5A5650;
     --accent:#33503F;
     --accent-soft:#6E8A7A;
+    --accent-pale:#E8EFE9;
     --line:#DCD5C7;
+    --white:#FFFCF7;
+    --shadow:0 10px 40px rgba(38,35,31,.06);
+    --nav-h:52px;
   }
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 16px);}
   body{
     margin:0;
-    background:var(--paper);
+    background:
+      linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 220px, var(--paper) 100%);
     color:var(--ink);
     font-family:'Lora', serif;
     font-size:1.08rem;
     line-height:1.75;
     -webkit-font-smoothing:antialiased;
   }
+  ::selection{
+    background:var(--accent-pale);
+    color:var(--ink);
+  }
+  .site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,247,241,.92);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .site-nav-inner{
+    max-width:720px; margin:0 auto;
+    padding:0 24px;
+    height:var(--nav-h);
+    display:flex; align-items:center; justify-content:center;
+    gap:20px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .site-nav-inner::-webkit-scrollbar{display:none;}
+  .site-nav a{
+    font-size:.78rem; font-weight:600; letter-spacing:.06em;
+    text-transform:uppercase; text-decoration:none;
+    color:var(--ink-soft); white-space:nowrap;
+    transition:color .2s;
+  }
+  .site-nav a:hover{color:var(--accent);}
   .page{
-    max-width:680px;
+    max-width:720px;
     margin:0 auto;
-    padding:80px 24px 100px;
+    padding:56px 24px 100px;
+  }
+  .masthead{
+    margin-bottom:0;
   }
   .kicker{
     font-style:italic;
@@ -38,38 +76,101 @@
     margin:0 0 10px;
   }
   h1{
-    font-size:clamp(2rem, 5vw, 2.7rem);
+    font-size:clamp(2rem, 5vw, 2.85rem);
     font-weight:600;
-    line-height:1.2;
-    margin:0 0 36px;
+    line-height:1.15;
+    margin:0 0 24px;
     color:var(--ink);
+    letter-spacing:-.02em;
+  }
+  .lede{
+    font-size:1.1rem;
+    color:var(--ink-soft);
+    margin:0;
   }
   h2{
-    font-size:1.5rem;
+    font-size:1.45rem;
     font-weight:600;
-    margin:56px 0 18px;
+    margin:56px 0 22px;
     color:var(--accent);
+    letter-spacing:-.01em;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--line);
   }
-  p{
-    margin:0 0 20px;
-  }
+  p{margin:0 0 20px;}
   a{
     color:var(--accent);
     text-decoration:underline;
     text-decoration-color:var(--accent-soft);
-    text-underline-offset:2px;
+    text-underline-offset:3px;
+    transition:color .15s, text-decoration-color .15s;
   }
-  a:hover{ color:var(--ink); }
-  .school{
-    margin-bottom:26px;
-  }
-  .school b{
+  a:hover{
     color:var(--ink);
+    text-decoration-color:var(--line);
   }
-  hr{
-    border:none;
+  .school{
+    margin-bottom:32px;
+    padding:28px 28px 8px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:6px;
+    box-shadow:var(--shadow);
+  }
+  .school p{
+    margin-bottom:18px;
+  }
+  .school b{color:var(--ink);}
+  .campus-mark{
+    margin:4px 0 0;
+    border-radius:4px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background:var(--paper);
+  }
+  .campus-mark img{
+    width:100%;
+    height:240px;
+    object-fit:cover;
+    display:block;
+    margin:0;
+  }
+  .campus-mark .loc{
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin:0;
+    padding:10px 14px;
+    text-align:center;
+    background:var(--paper);
     border-top:1px solid var(--line);
-    margin:48px 0;
+  }
+  .checklist-box{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:28px 28px 8px;
+    box-shadow:var(--shadow);
+  }
+  .progress-wrap{margin-bottom:24px;}
+  .progress-bar{
+    height:5px;
+    background:var(--paper-warm);
+    border-radius:99px;
+    overflow:hidden;
+    margin-bottom:8px;
+  }
+  .progress-fill{
+    height:100%; width:0%;
+    background:var(--accent);
+    border-radius:99px;
+    transition:width .35s ease;
+  }
+  .progress-text{
+    font-size:0.88rem;
+    font-style:italic;
+    color:var(--ink-soft);
+    margin:0;
   }
   ul.plain{
     margin:0 0 28px;
@@ -77,21 +178,23 @@
     list-style:none;
   }
   ul.plain li{
-    margin-bottom:14px;
-    padding-left:30px;
+    margin-bottom:10px;
+    padding:10px 12px 10px 38px;
     position:relative;
+    border-radius:4px;
+    transition:background .15s;
   }
+  ul.plain li:hover{background:var(--paper);}
   ul.plain li input[type=checkbox]{
     position:absolute;
-    left:0;
-    top:5px;
+    left:12px;
+    top:14px;
     width:17px;
     height:17px;
     accent-color:var(--accent);
-  }
-  ul.plain li label{
     cursor:pointer;
   }
+  ul.plain li label{cursor:pointer;}
   ul.plain input[type=checkbox]:checked + label{
     color:var(--ink-soft);
     text-decoration:line-through;
@@ -99,78 +202,58 @@
   }
   .group-label{
     font-style:italic;
+    color:var(--accent);
+    margin:28px 0 10px;
+    font-size:1.02rem;
+    font-weight:600;
+  }
+  .group-label:first-of-type{margin-top:0;}
+  .writing-note{
+    margin-top:-6px;
+    font-size:0.95rem;
     color:var(--ink-soft);
-    margin:30px 0 12px;
-    font-size:1rem;
-  }
-  .group-label:first-of-type{ margin-top:0; }
-  .links-list{
-    padding-left:0;
-    list-style:none;
-    margin:0;
-  }
-  .links-list li{ margin-bottom:10px; }
-  .campus-mark{
-    margin:18px 0 22px;
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:3px;
-    padding:16px 16px 14px;
-    text-align:center;
-  }
-  .campus-mark img{
-    width:100%;
-    max-width:520px;
-    height:auto;
-    display:block;
-    margin:0 auto 12px;
-    border-radius:2px;
-  }
-  .campus-mark .loc{
-    font-size:0.82rem;
-    color:var(--ink-soft);
-    font-style:italic;
-    margin:0;
-  }
-  .video-wrap{
-    position:relative;
-    width:100%;
-    padding-top:56.25%;
-    margin:22px 0;
-    border-radius:3px;
-    overflow:hidden;
-    background:#000;
-  }
-  .video-wrap iframe{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    border:0;
   }
   footer{
-    margin-top:60px;
+    margin-top:64px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
     color:var(--ink-soft);
     font-size:0.92rem;
     font-style:italic;
+    text-align:center;
+  }
+  @media (max-width:600px){
+    .page{padding:40px 18px 80px;}
+    .school{padding:20px 18px 4px;}
+    .checklist-box{padding:20px 18px 4px;}
+    .campus-mark img{height:200px;}
   }
 </style>
 </head>
 <body>
 
+<nav class="site-nav" aria-label="Sections">
+  <div class="site-nav-inner">
+    <a href="#schools">Schools</a>
+    <a href="#scholarships">Scholarships</a>
+    <a href="#application">Application</a>
+  </div>
+</nav>
+
 <div class="page">
 
-  <p class="kicker">A note for Laura, June 2026</p>
-  <h1>The road to a U.S. LL.M.</h1>
+  <header class="masthead">
+    <p class="kicker">A note for Laura, June 2026</p>
+    <h1>The road to a U.S. LL.M.</h1>
+    <p class="lede">An LL.M. is a one year master's degree built for lawyers who already qualify somewhere else. Government lawyers, judges, NGO counsel, and diplomats use it as a bridge into international organizations, multilateral institutions, think tanks, and academic life.</p>
+  </header>
 
-  <p>An LL.M. is a one year master's degree built for lawyers who already qualify somewhere else. Government lawyers, judges, NGO counsel, and diplomats use it as a bridge into international organizations, multilateral institutions, think tanks, and academic life.</p>
-
-  <h2>Schools to apply to</h2>
+  <h2 id="schools">Schools to apply to</h2>
 
   <div class="school">
     <p><b>Harvard Law School.</b> Around 180 students from roughly 70 countries make up a typical LL.M. class, and you build your own course of study rather than following a fixed track. Aid is need based only, but it is real: the average grant covers about half of tuition, and for students with the deepest need, Harvard has covered full tuition plus part of living costs. There is also a scholarship for lawyers from the developing world with at least two years of human rights work behind them. <a href="https://hls.harvard.edu/graduate-program/graduate-program-admissions-and-financial-aid/ll-m-admissions/" target="_blank" rel="noopener">See the program and apply</a></p>
     <figure class="campus-mark">
-      <img src="https://hls.harvard.edu/wp-content/uploads/2022/07/hls-card.png" alt="Harvard Law School campus" loading="lazy">
+      <img src="images/harvard.png" alt="Harvard Law School campus" loading="lazy">
       <p class="loc">Cambridge, Massachusetts</p>
     </figure>
   </div>
@@ -178,7 +261,7 @@
   <div class="school">
     <p><b>NYU School of Law.</b> Two of the strongest funding routes available to you sit here. The Hauser Global Scholarship covers full tuition and a stipend for ten to twenty students a year, open to anyone who graduated from a law school outside the US. The Podell Scholarship goes further: full tuition, living costs, and a flight to New York, reserved for citizens of countries the World Bank classifies as low income or lower middle income. Kenya qualifies. <a href="https://www.law.nyu.edu/llmjsd" target="_blank" rel="noopener">See the program and apply</a></p>
     <figure class="campus-mark">
-      <img src="https://www.law.nyu.edu/sites/default/files/2025-06/OHO_Hero_Students_20_0.jpg" alt="NYU School of Law students on campus" loading="lazy">
+      <img src="images/nyu.jpg" alt="NYU School of Law students on campus" loading="lazy">
       <p class="loc">Greenwich Village, New York</p>
     </figure>
   </div>
@@ -186,7 +269,7 @@
   <div class="school">
     <p><b>Georgetown Law.</b> The LL.M. in International Legal Studies gives you one of the largest international law curricula of any US school, in a city full of the institutions you might eventually work with. Every admitted student is automatically considered for a scholarship, no extra form needed, and Georgetown already runs funding partnerships with several specific countries. Worth a direct email asking whether one exists for Kenya. <a href="https://www.law.georgetown.edu/academics/llm-degree-programs/international-legal-studies/" target="_blank" rel="noopener">See the program and apply</a></p>
     <figure class="campus-mark">
-      <img src="https://www.law.georgetown.edu/wp-content/uploads/2024/08/homepage_2024-web-final-1440x810.jpg" alt="Georgetown Law campus" loading="lazy">
+      <img src="images/georgetown.jpg" alt="Georgetown Law campus" loading="lazy">
       <p class="loc">Washington, DC</p>
     </figure>
   </div>
@@ -194,7 +277,7 @@
   <div class="school">
     <p><b>American University, Washington College of Law.</b> Their International Legal Studies Program is one of the oldest of its kind, with students from more than fifty countries and a deep alumni network across Washington's international organizations. Funding here is genuinely strong: an Alumni Fund Scholarship can cover full tuition, a Global Talent Development Scholarship covers half, and a separate merit award covers up to forty percent. <a href="https://www.american.edu/wcl/academics/degrees/llm/programs/international/" target="_blank" rel="noopener">See the program and apply</a></p>
     <figure class="campus-mark">
-      <img src="https://www.american.edu/wcl/here/our-campus/visit/images/AUWCL03_6577103.jpg" alt="American University Washington College of Law campus" loading="lazy">
+      <img src="images/american.jpg" alt="American University Washington College of Law campus" loading="lazy">
       <p class="loc">Washington, DC</p>
     </figure>
   </div>
@@ -202,7 +285,7 @@
   <div class="school">
     <p><b>University of Notre Dame.</b> The LL.M. in International Human Rights Law is built around people with exactly your kind of background. Every admitted applicant is automatically considered for a tuition scholarship, no separate application, and the program's own director has said plainly that applying soon after the November opening meaningfully improves your odds. <a href="https://law.nd.edu/academics/llm-international-human-rights-law/" target="_blank" rel="noopener">See the program and apply</a></p>
     <figure class="campus-mark">
-      <img src="https://law.nd.edu/assets/629674/hr_llm_class_of_2026_library_2.jpeg" alt="Notre Dame Law School LL.M. students" loading="lazy">
+      <img src="images/notre-dame.jpeg" alt="Notre Dame Law School LL.M. students" loading="lazy">
       <p class="loc">South Bend, Indiana</p>
     </figure>
   </div>
@@ -210,7 +293,7 @@
   <div class="school">
     <p><b>Columbia Law School.</b> The Human Rights Institute runs an LL.M. Human Rights Leaders program alongside the regular degree, pairing students with mentoring, leadership coaching, and partial to full tuition waivers. You request it inside your normal LL.M. application by naming it in your personal statement. <a href="https://hri.law.columbia.edu/human-rights-leaders-llm-program" target="_blank" rel="noopener">See the program</a> &middot; <a href="https://www.law.columbia.edu/admissions/graduate-admissions/llm" target="_blank" rel="noopener">Apply to the LL.M.</a></p>
     <figure class="campus-mark">
-      <img src="https://www.law.columbia.edu/sites/default/files/2020-01/CU-Campus_2976.jpg" alt="Columbia University campus" loading="lazy">
+      <img src="images/columbia.jpg" alt="Columbia University campus" loading="lazy">
       <p class="loc">Morningside Heights, New York</p>
     </figure>
   </div>
@@ -218,7 +301,7 @@
   <div class="school">
     <p><b>University of Illinois.</b> It will not turn heads the way Harvard or Columbia do, but the program has hosted students from Kenya before, and more than eighty percent of its admitted LL.M. students receive a tuition scholarship. If guaranteed funding matters more than prestige, take this one seriously. <a href="https://law.illinois.edu/admissions/graduate-admissions/llm-application/" target="_blank" rel="noopener">See the program and apply</a></p>
     <figure class="campus-mark">
-      <img src="https://law.illinois.edu/wp-content/uploads/2024/07/UI-03-160714-065-768x512.jpg" alt="University of Illinois campus" loading="lazy">
+      <img src="images/illinois.jpg" alt="University of Illinois campus" loading="lazy">
       <p class="loc">Champaign, Illinois</p>
     </figure>
   </div>
@@ -226,7 +309,7 @@
   <div class="school">
     <p><b>UCLA School of Law.</b> A genuinely strong international and human rights faculty, in a city you might just enjoy living in for a year. A Dean's Tuition Fellowship is automatically considered for every applicant, based on a mix of need and merit. <a href="https://law.ucla.edu/academics/programs/llm-program" target="_blank" rel="noopener">See the program and apply</a></p>
     <figure class="campus-mark">
-      <img src="https://law.ucla.edu/sites/default/files/styles/full/public/images/media_comp/2.2%20LLM_Admissions_MediaComponent-DSC_0024.jpg?itok=tTfEKvRV" alt="UCLA School of Law campus" loading="lazy">
+      <img src="images/ucla.jpg" alt="UCLA School of Law campus" loading="lazy">
       <p class="loc">Westwood, Los Angeles</p>
     </figure>
   </div>
@@ -234,68 +317,158 @@
   <div class="school">
     <p><b>UC Berkeley School of Law.</b> Run through Berkeley's Center for African Studies, the Mastercard Foundation Scholars Program covers full tuition, living expenses, a laptop, and round trip flights for master's students from across Africa, including the LL.M. The program's first three Berkeley Law scholars included a Kenyan trained lawyer who had served as a presidential advisor in Somalia, so the fit is a real one, not a stretch. You apply to the LL.M. directly and are then nominated into the scholarship. <a href="https://www.law.berkeley.edu/academics/llm/application-admission/" target="_blank" rel="noopener">See the program and apply</a> &middot; <a href="https://mcfscholarsprogram.berkeley.edu/" target="_blank" rel="noopener">Mastercard Foundation Scholars Program</a></p>
     <figure class="campus-mark">
-      <img src="https://www.law.berkeley.edu/wp-content/uploads/2024/12/websharecard2.jpg" alt="UC Berkeley School of Law" loading="lazy">
+      <img src="images/berkeley.jpg" alt="UC Berkeley School of Law" loading="lazy">
       <p class="loc">Berkeley, California</p>
     </figure>
   </div>
 
-  <h2>Scholarships</h2>
+  <div class="school">
+    <p><b>University of Miami School of Law.</b> Miami has run LL.M. programs for foreign trained lawyers since the 1950s, and enrolls around ninety LL.M. students a year across several tracks, including international law. That is a larger pipeline than the most selective schools offer, and partial scholarships are available for qualified international applicants. The alumni network spans more than ninety five countries. <a href="https://admissions.law.miami.edu/academics/llm/foreign-trained-lawyers/" target="_blank" rel="noopener">See the program and apply</a></p>
+    <figure class="campus-mark">
+      <img src="images/miami.jpg" alt="University of Miami School of Law students" loading="lazy">
+      <p class="loc">Coral Gables, Florida</p>
+    </figure>
+  </div>
+
+  <div class="school">
+    <p><b>Temple University Beasley School of Law.</b> Temple reviews LL.M. applications with an eye toward professional experience, not just academic pedigree. Every admitted student is automatically considered for internal scholarships, with some awards covering out of state tuition entirely. Philadelphia is cheaper to live in than New York or DC, which matters when you are counting every dollar. <a href="https://www2.law.temple.edu/academics/llm/" target="_blank" rel="noopener">See the program and apply</a></p>
+    <figure class="campus-mark">
+      <img src="images/temple.jpg" alt="Temple University Beasley School of Law" loading="lazy">
+      <p class="loc">Philadelphia, Pennsylvania</p>
+    </figure>
+  </div>
+
+  <div class="school">
+    <p><b>Loyola Law School, Loyola Marymount University.</b> Loyola admits on a rolling basis through mid July, which means a complete application filed early can matter more than chasing a brand name. Every applicant is considered for merit scholarships of up to forty five thousand dollars, with no separate form. The campus sits in downtown Los Angeles, close to courthouses and firms, and the curriculum is unusually flexible for foreign trained lawyers. <a href="https://www.lls.edu/llm/" target="_blank" rel="noopener">See the program and apply</a></p>
+    <figure class="campus-mark">
+      <img src="images/loyola.jpg" alt="Loyola Law School campus" loading="lazy">
+      <p class="loc">Downtown Los Angeles, California</p>
+    </figure>
+  </div>
+
+  <div class="school">
+    <p><b>Santa Clara University School of Law.</b> Santa Clara keeps its LL.M. class deliberately small, but the bar for admission is more forgiving than at the top tier schools if your record is solid and your English is documented. You can specialize in human rights or international and comparative law, and merit scholarships run from twenty five percent to full tuition with automatic consideration at admission. The school charges no application fee of its own, only LSAC processing costs. <a href="https://law.scu.edu/admissions/our-programs/llm-programs/" target="_blank" rel="noopener">See the program and apply</a></p>
+    <figure class="campus-mark">
+      <img src="images/santa-clara.jpg" alt="Santa Clara University School of Law" loading="lazy">
+      <p class="loc">Santa Clara, California</p>
+    </figure>
+  </div>
+
+  <div class="school">
+    <p><b>University of Houston Law Center.</b> Houston runs one of the steadier foreign LL.M. programs in the country, enrolling lawyers from a wide range of countries each year. Tuition is lower than at most coastal schools, and the application process is straightforward for candidates who already hold a first law degree abroad. If cost of living and total budget matter as much as ranking, take this one seriously. <a href="https://www.law.uh.edu/llm/admissions-requirements-and-application-procedures.asp" target="_blank" rel="noopener">See the program and apply</a></p>
+    <figure class="campus-mark">
+      <img src="images/houston.jpg" alt="University of Houston Law Center" loading="lazy">
+      <p class="loc">Houston, Texas</p>
+    </figure>
+  </div>
+
+  <div class="school">
+    <p><b>St. John's University School of Law.</b> St. John's offers a Transnational Legal Practice LL.M. aimed at lawyers who plan to work across borders rather than relocate permanently to New York. Partial merit scholarships are awarded at the time of admission, with no extra application. The school is selective, but its class size and rolling review give a well prepared applicant more than one path in. <a href="https://www.stjohns.edu/law/admissions/llm-admissions" target="_blank" rel="noopener">See the program and apply</a></p>
+    <figure class="campus-mark">
+      <img src="images/st-johns.jpg" alt="St. John's University School of Law LL.M. students" loading="lazy">
+      <p class="loc">Queens, New York</p>
+    </figure>
+  </div>
+
+  <div class="school">
+    <p><b>Ohio State University, Moritz College of Law.</b> Moritz automatically considers every LL.M. applicant for partial scholarships, with separate awards reaching half tuition or more for the strongest candidates. Ohio State is not an elite brand in legal hiring, but the admissions process is less crowded than at schools that draw thousands of applicants for a few dozen seats. Worth including if you want scholarship money and a solid American law credential without betting everything on one reach school. <a href="https://moritzlaw.osu.edu/apply-now/llm-admissions/how-apply-llm-program" target="_blank" rel="noopener">See the program and apply</a></p>
+    <figure class="campus-mark">
+      <img src="images/ohio-state.jpg" alt="Ohio State Moritz College of Law" loading="lazy">
+      <p class="loc">Columbus, Ohio</p>
+    </figure>
+  </div>
+
+  <h2 id="scholarships">Scholarships</h2>
 
   <p>The single strongest lever for a Kenyan applicant is the <a href="https://ke.usembassy.gov/fulbright-foreign-students-program-2026-2027/" target="_blank" rel="noopener">Fulbright Foreign Student Program</a>, which can cover tuition, a living stipend, and travel in one package. Its most recent Kenya cycle closed in April 2026, and the next one is expected to open around January 2027. Worth keeping an eye on if the timing works for you.</p>
 
-  <div class="video-wrap">
-    <iframe src="https://www.youtube.com/embed/11IVcP7sfWY" title="How to apply for the Fulbright Foreign Student Program" loading="lazy" allowfullscreen></iframe>
-  </div>
-
   <p>Two more worth a look: the <a href="https://www.akdn.org/our-agencies/aga-khan-foundation/scholarship-programme" target="_blank" rel="noopener">Aga Khan Foundation</a> funds master's study for applicants from a short list of countries that includes Kenya, and <a href="https://www.accesslex.org/" target="_blank" rel="noopener">AccessLex</a> keeps a free, searchable database of more than eight hundred law school scholarships. And if you are still attached to a government office, it is worth asking about study leave or sponsorship before anything becomes final.</p>
 
-  <h2>Application materials</h2>
+  <h2 id="application">Application materials</h2>
 
-  <p>Check things off as you go.</p>
+  <div class="checklist-box">
+    <p>Check things off as you go.</p>
 
-  <p class="group-label">Academic records</p>
-  <ul class="plain">
-    <li><input type="checkbox" id="c1"><label for="c1">Official transcripts from every university you attended</label></li>
-    <li><input type="checkbox" id="c2"><label for="c2">Certified English translations for anything not already in English</label></li>
-    <li><input type="checkbox" id="c3"><label for="c3">Proof of each degree or diploma</label></li>
-  </ul>
+    <div class="progress-wrap">
+      <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+      <p class="progress-text" id="progressText">0 of 17 complete</p>
+    </div>
 
-  <p class="group-label">Tests</p>
-  <ul class="plain">
-    <li><input type="checkbox" id="c4"><label for="c4">TOEFL or IELTS (ask each school whether a waiver applies to you)</label></li>
-    <li><input type="checkbox" id="c5"><label for="c5">GRE or GMAT, only if a specific program asks for it</label></li>
-  </ul>
+    <p class="group-label">Academic records</p>
+    <ul class="plain">
+      <li><input type="checkbox" id="c1" data-check><label for="c1">Official transcripts from every university you attended</label></li>
+      <li><input type="checkbox" id="c2" data-check><label for="c2">Certified English translations for anything not already in English</label></li>
+      <li><input type="checkbox" id="c3" data-check><label for="c3">Proof of each degree or diploma</label></li>
+    </ul>
 
-  <p class="group-label">People who vouch for you</p>
-  <ul class="plain">
-    <li><input type="checkbox" id="c6"><label for="c6">Three letters of recommendation</label></li>
-    <li><input type="checkbox" id="c7"><label for="c7">At least one from someone who supervised your legal work directly</label></li>
-  </ul>
+    <p class="group-label">Tests</p>
+    <ul class="plain">
+      <li><input type="checkbox" id="c4" data-check><label for="c4">TOEFL or IELTS (ask each school whether a waiver applies to you)</label></li>
+      <li><input type="checkbox" id="c5" data-check><label for="c5">GRE or GMAT, only if a specific program asks for it</label></li>
+    </ul>
 
-  <p class="group-label">Writing</p>
-  <p style="margin-top:-6px; font-size:0.95rem;">LL.M. personal statements are judged differently from the standard law school essay, so it is worth reading guidance written specifically for LL.M. applicants rather than JD ones. <a href="https://llm-guide.com/articles/how-to-write-the-perfect-llm-statement" target="_blank" rel="noopener">How to Write the Perfect LL.M. Statement</a>, <a href="https://llm-guide.com/articles/llm-admissions-how-to-write-a-personal-statement" target="_blank" rel="noopener">LL.M. Admissions: How to Write a Personal Statement</a>, and <a href="https://nationaljurist.com/national-jurist-magazine/llm-candidates-how-write-personal-statement/" target="_blank" rel="noopener">LLM candidates: How to write a personal statement</a> are all written for exactly your situation, a qualified lawyer explaining why this specific program matters now, rather than a college senior explaining why they want to become a lawyer at all.</p>
-  <ul class="plain">
-    <li><input type="checkbox" id="c8"><label for="c8">A personal statement, written fresh for each program, naming the specific thing you want from it</label></li>
-    <li><input type="checkbox" id="c9"><label for="c9">A resume formatted the way US legal employers expect</label></li>
-    <li><input type="checkbox" id="c10"><label for="c10">A writing sample if one is requested, a brief or memo works well</label></li>
-  </ul>
+    <p class="group-label">People who vouch for you</p>
+    <ul class="plain">
+      <li><input type="checkbox" id="c6" data-check><label for="c6">Three letters of recommendation</label></li>
+      <li><input type="checkbox" id="c7" data-check><label for="c7">At least one from someone who supervised your legal work directly</label></li>
+    </ul>
 
-  <p class="group-label">Money</p>
-  <ul class="plain">
-    <li><input type="checkbox" id="c11"><label for="c11">A financial aid application (usually separate from the admissions one)</label></li>
-    <li><input type="checkbox" id="c12"><label for="c12">Bank statements or a sponsor letter if applying for need based aid</label></li>
-    <li><input type="checkbox" id="c13"><label for="c13">Fulbright's financial forms, if that route comes together in time</label></li>
-  </ul>
+    <p class="group-label">Writing</p>
+    <p class="writing-note">LL.M. personal statements are judged differently from the standard law school essay, so it is worth reading guidance written specifically for LL.M. applicants rather than JD ones. <a href="https://llm-guide.com/articles/how-to-write-the-perfect-llm-statement" target="_blank" rel="noopener">How to Write the Perfect LL.M. Statement</a>, <a href="https://llm-guide.com/articles/llm-admissions-how-to-write-a-personal-statement" target="_blank" rel="noopener">LL.M. Admissions: How to Write a Personal Statement</a>, and <a href="https://nationaljurist.com/national-jurist-magazine/llm-candidates-how-write-personal-statement/" target="_blank" rel="noopener">LLM candidates: How to write a personal statement</a> are all written for exactly your situation, a qualified lawyer explaining why this specific program matters now, rather than a college senior explaining why they want to become a lawyer at all.</p>
+    <ul class="plain">
+      <li><input type="checkbox" id="c8" data-check><label for="c8">A personal statement, written fresh for each program, naming the specific thing you want from it</label></li>
+      <li><input type="checkbox" id="c9" data-check><label for="c9">A resume formatted the way US legal employers expect</label></li>
+      <li><input type="checkbox" id="c10" data-check><label for="c10">A writing sample if one is requested, a brief or memo works well</label></li>
+    </ul>
 
-  <p class="group-label">Visa</p>
-  <ul class="plain">
-    <li><input type="checkbox" id="c14"><label for="c14">A Kenyan passport valid at least six months past the program start date</label></li>
-    <li><input type="checkbox" id="c15"><label for="c15">An I-20 (F-1 visa) or DS-2019 (J-1 visa, if Fulbright funded)</label></li>
-    <li><input type="checkbox" id="c16"><label for="c16">The SEVIS I-901 fee receipt</label></li>
-    <li><input type="checkbox" id="c17"><label for="c17">A completed DS-160 and an embassy interview booked in Nairobi</label></li>
-  </ul>
+    <p class="group-label">Money</p>
+    <ul class="plain">
+      <li><input type="checkbox" id="c11" data-check><label for="c11">A financial aid application (usually separate from the admissions one)</label></li>
+      <li><input type="checkbox" id="c12" data-check><label for="c12">Bank statements or a sponsor letter if applying for need based aid</label></li>
+      <li><input type="checkbox" id="c13" data-check><label for="c13">Fulbright's financial forms, if that route comes together in time</label></li>
+    </ul>
+
+    <p class="group-label">Visa</p>
+    <ul class="plain">
+      <li><input type="checkbox" id="c14" data-check><label for="c14">A Kenyan passport valid at least six months past the program start date</label></li>
+      <li><input type="checkbox" id="c15" data-check><label for="c15">An I-20 (F-1 visa) or DS-2019 (J-1 visa, if Fulbright funded)</label></li>
+      <li><input type="checkbox" id="c16" data-check><label for="c16">The SEVIS I-901 fee receipt</label></li>
+      <li><input type="checkbox" id="c17" data-check><label for="c17">A completed DS-160 and an embassy interview booked in Nairobi</label></li>
+    </ul>
+  </div>
+
+  <footer>Prepared for Laura · June 2026</footer>
 
 </div>
+
+<script>
+(function(){
+  var KEY = 'laura-llm-checks';
+  var boxes = document.querySelectorAll('[data-check]');
+  var fill = document.getElementById('progressFill');
+  var text = document.getElementById('progressText');
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) {}
+
+  function updateProgress(){
+    var done = 0;
+    boxes.forEach(function(b){ if (b.checked) done++; });
+    fill.style.width = (boxes.length ? Math.round((done / boxes.length) * 100) : 0) + '%';
+    text.textContent = done + ' of ' + boxes.length + ' complete';
+  }
+
+  boxes.forEach(function(box){
+    if (saved[box.id]) box.checked = true;
+    box.addEventListener('change', function(){
+      saved[box.id] = box.checked;
+      localStorage.setItem(KEY, JSON.stringify(saved));
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+})();
+</script>
 
 </body>
 </html>
